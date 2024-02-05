@@ -68,7 +68,6 @@ func lineNbMetricDesc(ns string) *prometheus.Desc {
 	)
 }
 
-
 // Collector compute metrics for each file matching the patterns
 type fileStatCollector struct {
 	filesPatterns      []string
@@ -82,7 +81,7 @@ type filesCollector struct {
 
 	atLeastOneCRC32Metric  bool
 	atLeastOneLineNbMetric bool
-	namespace   string
+	namespace              string
 
 	logger log.Logger
 }
