@@ -36,19 +36,21 @@ const (
 	defaultWorkingDir    = "."
 	defaultListenAddress = ":9943"
 	defaultMetricsPath   = "/metrics"
+	defaultMetricsPrefix = ""
 )
 
 func main() {
 	commandLine := flag.NewFlagSet("filestat_exporter", flag.ExitOnError)
 	var (
-		cfgFile       = commandLine.String("config.file", defaultConfigFile, "The path to the configuration file (use \"none\" to disable).")
-		logLevel      = commandLine.String("log.level", defaultLogLevel, "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error].")
-		crc32Metric   = commandLine.Bool("metric.crc32", false, "Generate CRC32 hash metric of files.")
-		lineNbMetric  = commandLine.Bool("metric.nb_lines", false, "Generate line number metric of files.")
-		workingDir    = commandLine.String("path.cwd", defaultWorkingDir, "Working directory of path pattern collection")
-		printVersion  = commandLine.Bool("version", false, "Print the version of the exporter and exit.")
-		listenAddress = commandLine.String("web.listen-address", defaultListenAddress, "The address to listen on for HTTP requests.")
-		metricsPath   = commandLine.String("web.telemetry-path", defaultMetricsPath, "The path under which to expose metrics.")
+		cfgFile          = commandLine.String("config.file", defaultConfigFile, "The path to the configuration file (use \"none\" to disable).")
+		logLevel         = commandLine.String("log.level", defaultLogLevel, "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error].")
+		crc32Metric      = commandLine.Bool("metric.crc32", false, "Generate CRC32 hash metric of files.")
+		lineNbMetric     = commandLine.Bool("metric.nb_lines", false, "Generate line number metric of files.")
+		workingDir       = commandLine.String("path.cwd", defaultWorkingDir, "Working directory of path pattern collection")
+		printVersion     = commandLine.Bool("version", false, "Print the version of the exporter and exit.")
+		listenAddress    = commandLine.String("web.listen-address", defaultListenAddress, "The address to listen on for HTTP requests.")
+		metricsPath      = commandLine.String("web.telemetry-path", defaultMetricsPath, "The path under which to expose metrics.")
+		namespace        = commandLine.String("metric.namespace", defaultMetricsPrefix, "The prefix which should be used for metrics.")
 	)
 	webConfig := web.FlagConfig{
 		WebListenAddresses: func() *[]string { a := make([]string, 1); return &a }(),
@@ -70,6 +72,7 @@ func main() {
 		collectorMetricConfig: collectorMetricConfig{
 			EnableCRC32Metric:  crc32Metric,
 			EnableNbLineMetric: lineNbMetric,
+			Namespace:          namespace,
 		},
 		GlobPatternPath: commandLine.Args(),
 	}
