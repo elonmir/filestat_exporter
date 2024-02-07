@@ -27,8 +27,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-const namespace = "file"
-
 func fileMatchingGlobNbDesc(ns string) *prometheus.Desc {
 	return prometheus.NewDesc(
 		prometheus.BuildFQName(ns, "glob", "match_number"),
@@ -89,9 +87,6 @@ type filesCollector struct {
 // Describe implements the prometheus.Collector interface.
 func (c *filesCollector) Describe(ch chan<- *prometheus.Desc) {
 	ns := c.namespace
-	if ns == "" {
-		ns = namespace
-	}
 	ch <- fileMatchingGlobNbDesc(ns)
 	ch <- fileSizeBytesDesc(ns)
 	ch <- fileModifTimeSecondsDesc(ns)

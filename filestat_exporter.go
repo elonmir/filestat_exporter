@@ -36,7 +36,7 @@ const (
 	defaultWorkingDir    = "."
 	defaultListenAddress = ":9943"
 	defaultMetricsPath   = "/metrics"
-	defaultMetricsPrefix = ""
+	defaultMetricsPrefix = "file"
 )
 
 func main() {
@@ -49,8 +49,8 @@ func main() {
 		workingDir    = commandLine.String("path.cwd", defaultWorkingDir, "Working directory of path pattern collection")
 		printVersion  = commandLine.Bool("version", false, "Print the version of the exporter and exit.")
 		listenAddress = commandLine.String("web.listen-address", defaultListenAddress, "The address to listen on for HTTP requests.")
-		metricsPath   = commandLine.String("web.telemetry-path", defaultMetricsPath, "The path under which to expose metrics.")
-		namespace     = commandLine.String("metric.namespace", defaultMetricsPrefix, "The prefix which should be used for metrics.")
+		metricsPath = commandLine.String("web.telemetry-path", defaultMetricsPath, "The path under which to expose metrics.")
+		namespace   = commandLine.String("metric.namespace", defaultMetricsPrefix, "The prefix which should be used for metrics.")
 	)
 	webConfig := web.FlagConfig{
 		WebListenAddresses: func() *[]string { a := make([]string, 1); return &a }(),

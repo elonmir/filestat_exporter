@@ -28,7 +28,7 @@ Optional flags:
 * __`-path.cwd <path>`:__ Change working directory of path pattern collection.
 * __`-metric.crc32`:__ Generate CRC32 hash metric of files.
 * __`-metric.nb_lines`:__ Generate line number metric of files.
-* __`-namespace`:__ Change the namespace for the metrics.
+* __`-metric.namespace`:__ Change the namespace for the metrics.
 
 The exporter can read a config file in yaml format (`filestat.yaml` by default).
 
