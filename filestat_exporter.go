@@ -39,6 +39,10 @@ const (
 	defaultMetricsPrefix = "file"
 )
 
+const (
+	logTextConfigOverride = "Config override"
+)
+
 func main() {
 	commandLine := flag.NewFlagSet("filestat_exporter", flag.ExitOnError)
 	var (
@@ -103,7 +107,7 @@ func main() {
 	// adjust working directory globally
 	if *workingDir != defaultWorkingDir {
 		if len(config.Exporter.WorkingDirectory) != 0 {
-			level.Info(logger).Log("msg", "Config override", "from", "parameter", "working_directory", *workingDir)
+			level.Info(logger).Log("msg", logTextConfigOverride, "from", "parameter", "working_directory", *workingDir)
 		}
 		config.Exporter.WorkingDirectory = *workingDir
 	}
@@ -129,7 +133,7 @@ func main() {
 	hasMetricsPathConfig := len(config.Exporter.MetricsPath) != 0
 	if *metricsPath != defaultMetricsPath || !hasMetricsPathConfig {
 		if hasMetricsPathConfig {
-			level.Info(logger).Log("msg", "Config override", "from", "parameter", "metrics_path", *metricsPath)
+			level.Info(logger).Log("msg", logTextConfigOverride, "from", "parameter", "metrics_path", *metricsPath)
 		}
 		config.Exporter.MetricsPath = *metricsPath
 	}
@@ -140,7 +144,7 @@ func main() {
 	hasListenAddrConfig := len(config.Exporter.ListenAddress) != 0
 	if *listenAddress != defaultListenAddress || !hasListenAddrConfig {
 		if hasListenAddrConfig {
-			level.Info(logger).Log("msg", "Config override", "from", "parameter", "listen_address", *listenAddress)
+			level.Info(logger).Log("msg", logTextConfigOverride, "from", "parameter", "listen_address", *listenAddress)
 		}
 		config.Exporter.ListenAddress = *listenAddress
 	}
