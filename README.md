@@ -28,6 +28,7 @@ Optional flags:
 * __`-path.cwd <path>`:__ Change working directory of path pattern collection.
 * __`-metric.crc32`:__ Generate CRC32 hash metric of files.
 * __`-metric.nb_lines`:__ Generate line number metric of files.
+* __`-namespace`:__ Change the namespace for the metrics.
 
 The exporter can read a config file in yaml format (`filestat.yaml` by default).
 
@@ -42,6 +43,10 @@ exporter:
   # Default enable/disable of metrics - overridden if not set by parameter '-metric.*'
   enable_crc32_metric: true
   # enable_nb_line_metric: false
+  
+  # Add a prefix for metrics
+  # namespace: ""
+  
   # list of patterns to apply - metrics can be enable/disabled for each group
   files:
     - patterns: ["*.html","assets/*.css","scripts/*.js"]
@@ -50,6 +55,7 @@ exporter:
     - patterns: ["archives/*.tar.gz"]
       enable_crc32_metric: false
       enable_nb_line_metric: false
+      add_prefix_to_metric: ""
 ```
 
 Note: if a file is matched by a pattern more than once, only the first match's config is used
@@ -71,8 +77,8 @@ Glob pattern uses the implementation of [bmatcuk/doublestar](https://github.com/
 | file_content_hash_crc32  (*) | CRC32 hash of file content                   | path     |
 | file_content_line_number (*) | Number of lines in file                      | path     |
 
-Note: metrics with `(*)` are only provided if configured
-
+Note: metrics with `(*)` are only provided if configured\
+Note: if namespace option is configured, the metric name is changed accordingly e.g. `file_glob_match_number` becomes `namespace_glob_match_number`
 
 ## Building and running
 
