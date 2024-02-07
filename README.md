@@ -44,14 +44,15 @@ exporter:
   enable_crc32_metric: true
   # enable_nb_line_metric: false
   
-  # Add a prefix for metrics
-  # namespace: ""
+  # Set the namespace for metrics
+  # namespace: "file"
   
   # list of patterns to apply - metrics can be enable/disabled for each group
   files:
     - patterns: ["*.html","assets/*.css","scripts/*.js"]
     - patterns: ["data/*.csv"]
       enable_nb_line_metric: true
+      # namespace: "file"
     - patterns: ["archives/*.tar.gz"]
       enable_crc32_metric: false
       enable_nb_line_metric: false

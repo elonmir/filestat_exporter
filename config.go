@@ -55,7 +55,9 @@ func mergeCollectorMetrics(collector *collectorMetricConfig, defaultCollector *c
 	if collector.EnableNbLineMetric == nil {
 		collector.EnableNbLineMetric = defaultCollector.EnableNbLineMetric
 	}
-	collector.Namespace = defaultCollector.Namespace
+	if collector.Namespace == nil || *collector.Namespace == "" {
+		collector.Namespace = defaultCollector.Namespace
+	}
 }
 
 func readConfig(cfgFile string, defaultCollector *collectorConfig, logger log.Logger) (*configContent, error) {
@@ -92,9 +94,9 @@ func readConfig(cfgFile string, defaultCollector *collectorConfig, logger log.Lo
 		level.Info(logger).Log("msg", "Config", "from", "general", "enable_nb_line_metric", *cfg.Exporter.EnableNbLineMetric)
 	}
 	if cfg.Exporter.Namespace == nil {
-		level.Info(logger).Log("msg", "Config", "from", "parameter", "add_prefix_to_metric", *defaultCollector.Namespace)
+		level.Info(logger).Log("msg", "Config", "from", "parameter", "namespace", *defaultCollector.Namespace)
 	} else {
-		level.Info(logger).Log("msg", "Config", "from", "general", "add_prefix_to_metric", *cfg.Exporter.Namespace)
+		level.Info(logger).Log("msg", "Config", "from", "general", "namespace", *cfg.Exporter.Namespace)
 	}
 	mergeCollectorMetrics(&cfg.Exporter.collectorMetricConfig, &defaultCollector.collectorMetricConfig)
 
